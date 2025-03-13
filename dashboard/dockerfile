@@ -1,0 +1,18 @@
+# Use Python base image
+FROM python:3.9
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy only the requirements file and install dependencies
+COPY reqs_dashboard.txt .
+RUN pip install --no-cache-dir -r reqs_dashboard.txt
+
+# Copy only `dashboard.py` 
+COPY dashboard.py /app/dashboard.py
+
+# Expose the default Streamlit port
+EXPOSE 8501
+
+# Run the Streamlit app
+CMD ["streamlit", "run", "/app/dashboard.py", "--server.port=8501", "--server.address=0.0.0.0", "--logger.level=debug"]

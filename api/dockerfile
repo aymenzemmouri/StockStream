@@ -1,0 +1,22 @@
+# Use Python base image
+FROM python:3.9
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the API script correctly
+COPY stock_data_api.py /app/
+
+# Copy the requirements file and install dependencies
+COPY reqs_api.txt /app/
+RUN pip install --no-cache-dir -r /app/reqs_api.txt
+
+RUN mkdir -p /app/src
+
+# COPY src/ /app/src/
+
+# Expose the API port
+EXPOSE 8000
+
+# Run the API correctly
+CMD ["python", "/app/stock_data_api.py"]
