@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 
-# ✅ Configuration
+# Configuration
 TICKERS = [
     # 🔹 Tech Giants
     "AAPL", "MSFT", "GOOGL", "TSLA", "AMZN", "META", "NVDA", "AMD", "INTC", "ORCL",
@@ -11,7 +11,7 @@ START_DATE = "1990-01-01"
 END_DATE = "2025-01-31"
 INTERVAL = "1d"
 
-# ✅ Default arguments for Airflow
+# Default arguments for Airflow
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
@@ -30,57 +30,57 @@ def create_dag():
         concurrency=len(TICKERS)
     ) as dag:
 
-        # ✅ Create task dictionaries for dependencies
+        # Create task dictionaries for dependencies
         unpack_tasks = {}
         preprocess_tasks = {}
         process_tasks = {}
 
-        # # ✅ Task 1: Download each ticker to raw storage (Runs in parallel)
+        # # Task 1: Download each ticker to raw storage (Runs in parallel)
         # for ticker in TICKERS:
         #     unpack_tasks[ticker] = BashOperator(
         #         task_id=f"download_{ticker}",
         #         bash_command=f"python /opt/airflow/scripts/unpack_to_raw.py {ticker} {START_DATE} {END_DATE} {INTERVAL} --endpoint_url http://localstack:4566",
         #     )
 
-        # # ✅ Task 2: Preprocess Staging (Runs in parallel after downloading)
+        # # Task 2: Preprocess Staging (Runs in parallel after downloading)
         # for ticker in TICKERS:
         #     preprocess_tasks[ticker] = BashOperator(
         #         task_id=f"preprocess_{ticker}",
         #         bash_command=f"python /opt/airflow/scripts/preprocess_to_staging.py {ticker} --endpoint_url http://localstack:4566",
         #     )
-        #     unpack_tasks[ticker] >> preprocess_tasks[ticker]  # ✅ Ensure unpack runs first
+        #     unpack_tasks[ticker] >> preprocess_tasks[ticker]  # Ensure unpack runs first
 
-        # # ✅ Task 3: Process to Curated (Runs in parallel after preprocessing)
+        # # Task 3: Process to Curated (Runs in parallel after preprocessing)
         # for ticker in TICKERS:
         #     process_tasks[ticker] = BashOperator(
         #         task_id=f"process_{ticker}",
         #         bash_command=f"python /opt/airflow/scripts/process_to_curated.py {ticker} --endpoint_url http://localstack:4566",
         #     )
-        #     preprocess_tasks[ticker] >> process_tasks[ticker]  # ✅ Ensure preprocess runs before processing
+        #     preprocess_tasks[ticker] >> process_tasks[ticker]  # Ensure preprocess runs before processing
 
 
-        # # ✅ Task 1: Download each ticker to raw storage (Runs in parallel)
+        # # Task 1: Download each ticker to raw storage (Runs in parallel)
         # for ticker in TICKERS:
         #     unpack_tasks[ticker] = BashOperator(
         #         task_id=f"download_{ticker}",
         #         bash_command=f"python /opt/airflow/scripts/unpack_to_raw.py {ticker} {START_DATE} {END_DATE} {INTERVAL} --endpoint_url http://localstack:4566",
         #     )
 
-        # # ✅ Task 2: Preprocess Staging (Runs in parallel after downloading)
+        # # Task 2: Preprocess Staging (Runs in parallel after downloading)
         # for ticker in TICKERS:
         #     preprocess_tasks[ticker] = BashOperator(
         #         task_id=f"preprocess_{ticker}",
         #         bash_command=f"python /opt/airflow/scripts/preprocess_to_staging.py {ticker} --endpoint_url http://localstack:4566",
         #     )
-        #     unpack_tasks[ticker] >> preprocess_tasks[ticker]  # ✅ Ensure unpack runs first
+        #     unpack_tasks[ticker] >> preprocess_tasks[ticker]  # Ensure unpack runs first
 
-        # # ✅ Task 3: Process to Curated (Runs in parallel after preprocessing)
+        # # Task 3: Process to Curated (Runs in parallel after preprocessing)
         # for ticker in TICKERS:
         #     process_tasks[ticker] = BashOperator(
         #         task_id=f"process_{ticker}",
         #         bash_command=f"python /opt/airflow/scripts/process_to_curated.py {ticker} --endpoint_url http://localstack:4566",
         #     )
-        #     preprocess_tasks[ticker] >> process_tasks[ticker]  # ✅ Ensure preprocess runs before processing
+        #     preprocess_tasks[ticker] >> process_tasks[ticker]  # Ensure preprocess runs before processing
 
         previous_task = None  # To track the last task in the sequence
 
@@ -114,5 +114,5 @@ def create_dag():
 
     return dag
 
-# ✅ Assign the DAG
+# Assign the DAG
 globals()["stock_data_pipeline"] = create_dag()
