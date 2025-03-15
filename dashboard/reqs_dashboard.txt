@@ -1,0 +1,17 @@
+# Streamlit (Web App)
+streamlit
+
+# Data Handling
+pandas
+numpy  # Optional: Faster numerical operations
+
+# Visualization
+plotly
+matplotlib
+seaborn
+
+# Database (DuckDB for querying)
+duckdb
+
+# Miscellaneous
+pyarrow  # Required for DuckDB to read Parquet files

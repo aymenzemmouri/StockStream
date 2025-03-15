@@ -1,0 +1,8 @@
+sanic
+pandas
+boto3
+asyncio
+yfinance
+numpy
+numba
+pyarrow

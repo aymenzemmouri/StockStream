@@ -12,7 +12,6 @@ test.ipynb
 *.csv
 *.json
 *.log
-*.txt
 *.feather
 
 .DS_Store
